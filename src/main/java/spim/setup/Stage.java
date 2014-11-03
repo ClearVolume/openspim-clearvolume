@@ -1,15 +1,13 @@
 package spim.setup;
 
+import mmcorej.CMMCore;
+import mmcorej.DeviceType;
+import org.micromanager.utils.ReportingUtils;
+import spim.setup.SPIMSetup.SPIMDevice;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.micromanager.utils.ReportingUtils;
-
-import spim.setup.SPIMSetup.SPIMDevice;
-
-import mmcorej.CMMCore;
-import mmcorej.DeviceType;
 
 public class Stage extends Device {
 	static {
@@ -90,8 +88,13 @@ public class Stage extends Device {
 	 * @return A collection of the allowed velocities.
 	 */
 	public Collection<Double> getAllowedVelocities() {
-		if(!hasProperty("Velocity"))
-			return null;
+		if(!hasProperty("Velocity")) {
+            // we are probably on the demo stage
+            List<Double> list = new ArrayList<Double>(2);
+            list.add(1.0);
+
+            return list;
+        }
 		
 		Collection<String> vals = getPropertyAllowedValues("Velocity");
 		List<Double> list = new ArrayList<Double>(vals.size());
