@@ -1,23 +1,14 @@
 package spim;
 
 import ij.IJ;
+import org.apache.commons.math3.linear.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-
-import org.apache.commons.math3.linear.DecompositionSolver;
-import org.apache.commons.math3.linear.LUDecomposition;
-import org.apache.commons.math3.linear.MatrixUtils;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
+import java.util.*;
 
 /**
  * Fits a hypersphere to a number of n-dimensional points.
  *
- * The principle is described in {@link fiji.util.Circle_Fitter}.
+ * The principle is described in circlefitter.
  */
 public class FitHypersphere {
 	protected double[] center;
