@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Javac" />
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="SPIMAcquisition" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SPIMAcquisition" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="CopyrightManager" default="" />
+  <component name="DependencyValidationManager">
+    <option name="SKIP_IMPORT_STATEMENTS" value="false" />
+  </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+  </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SPIMAcquisition.iml" filepath="$PROJECT_DIR$/SPIMAcquisition.iml" />
+    </modules>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" assert-keyword="true" jdk-15="true" project-jdk-name="1.8 (1)" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+  </component>
+  <component name="libraryTable">
+    <library name="Maven: bouncycastle:bcmail-jdk14:138">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/bouncycastle/bcmail-jdk14/138/bcmail-jdk14-138-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: bouncycastle:bcprov-jdk14:138">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/bouncycastle/bcprov-jdk14/138/bcprov-jdk14-138-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ch.qos.logback:logback-classic:1.1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-classic/1.1.1/logback-classic-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-classic/1.1.1/logback-classic-1.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-classic/1.1.1/logback-classic-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ch.qos.logback:logback-core:1.1.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-core/1.1.1/logback-core-1.1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-core/1.1.1/logback-core-1.1.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ch/qos/logback/logback-core/1.1.1/logback-core-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: clearvolume:ClearVolume:1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/clearvolume/ClearVolume/1.0/ClearVolume-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/clearvolume/ClearVolume/1.0/ClearVolume-1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/clearvolume/ClearVolume/1.0/ClearVolume-1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.esotericsoftware.kryo:kryo:shaded:2.21">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/esotericsoftware/kryo/kryo/2.21/kryo-2.21-shaded.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/esotericsoftware/kryo/kryo/2.21/kryo-2.21-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/esotericsoftware/kryo/kryo/2.21/kryo-2.21-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.googlecode.gentyref:gentyref:1.1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/gentyref/gentyref/1.1.0/gentyref-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/gentyref/gentyref/1.1.0/gentyref-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/gentyref/gentyref/1.1.0/gentyref-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.jcraft:jzlib:1.0.7">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jcraft/jzlib/1.0.7/jzlib-1.0.7.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jcraft/jzlib/1.0.7/jzlib-1.0.7-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jcraft/jzlib/1.0.7/jzlib-1.0.7-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.jgoodies:jgoodies-common:1.7.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/jgoodies-common/1.7.0/jgoodies-common-1.7.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/jgoodies-common/1.7.0/jgoodies-common-1.7.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/jgoodies-common/1.7.0/jgoodies-common-1.7.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.jgoodies:jgoodies-forms:1.7.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/jgoodies-forms/1.7.2/jgoodies-forms-1.7.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/jgoodies-forms/1.7.2/jgoodies-forms-1.7.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/jgoodies-forms/1.7.2/jgoodies-forms-1.7.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.lowagie:itext:2.1.5">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.5/itext-2.1.5.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.5/itext-2.1.5-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/lowagie/itext/2.1.5/itext-2.1.5-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: edu.mines:mines-jtk:20100113">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/edu/mines/mines-jtk/20100113/mines-jtk-20100113.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/edu/mines/mines-jtk/20100113/mines-jtk-20100113-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/edu/mines/mines-jtk/20100113/mines-jtk-20100113-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: edu.ucar:udunits:4.3.18">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/edu/ucar/udunits/4.3.18/udunits-4.3.18.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/edu/ucar/udunits/4.3.18/udunits-4.3.18-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/edu/ucar/udunits/4.3.18/udunits-4.3.18-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: gov.nist.math:jama:1.0.3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/gov/nist/math/jama/1.0.3/jama-1.0.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/gov/nist/math/jama/1.0.3/jama-1.0.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/gov/nist/math/jama/1.0.3/jama-1.0.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: io.scif:scifio-jai-imageio:1.1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/scif/scifio-jai-imageio/1.1.0/scifio-jai-imageio-1.1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/io/scif/scifio-jai-imageio/1.1.0/scifio-jai-imageio-1.1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/scif/scifio-jai-imageio/1.1.0/scifio-jai-imageio-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: io.scif:scifio:0.15.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/scif/scifio/0.15.4/scifio-0.15.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/io/scif/scifio/0.15.4/scifio-0.15.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/io/scif/scifio/0.15.4/scifio-0.15.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: jama:jama:1.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/jama/jama/1.0.2/jama-1.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/jama/jama/1.0.2/jama-1.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/jama/jama/1.0.2/jama-1.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: java3d:j3d-core-utils:1.5.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/j3d-core-utils/1.5.2/j3d-core-utils-1.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/j3d-core-utils/1.5.2/j3d-core-utils-1.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/j3d-core-utils/1.5.2/j3d-core-utils-1.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: java3d:j3d-core:1.5.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/j3d-core/1.5.2/j3d-core-1.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/j3d-core/1.5.2/j3d-core-1.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/j3d-core/1.5.2/j3d-core-1.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: java3d:vecmath:1.5.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/vecmath/1.5.2/vecmath-1.5.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/vecmath/1.5.2/vecmath-1.5.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/java3d/vecmath/1.5.2/vecmath-1.5.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: joda-time:joda-time:2.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.2/joda-time-2.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.2/joda-time-2.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.2/joda-time-2.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: mpicbg:mpicbg:0.6.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/mpicbg/mpicbg/0.6.1/mpicbg-0.6.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/mpicbg/mpicbg/0.6.1/mpicbg-0.6.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/mpicbg/mpicbg/0.6.1/mpicbg-0.6.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imagej:ij:1.49d">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imagej/ij/1.49d/ij-1.49d.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imagej/ij/1.49d/ij-1.49d-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imagej/ij/1.49d/ij-1.49d-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imglib2:imglib2-algorithms-gpl:2.0.0-beta-26">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms-gpl/2.0.0-beta-26/imglib2-algorithms-gpl-2.0.0-beta-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms-gpl/2.0.0-beta-26/imglib2-algorithms-gpl-2.0.0-beta-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms-gpl/2.0.0-beta-26/imglib2-algorithms-gpl-2.0.0-beta-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imglib2:imglib2-algorithms-legacy:2.0.0-beta-26">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms-legacy/2.0.0-beta-26/imglib2-algorithms-legacy-2.0.0-beta-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms-legacy/2.0.0-beta-26/imglib2-algorithms-legacy-2.0.0-beta-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms-legacy/2.0.0-beta-26/imglib2-algorithms-legacy-2.0.0-beta-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imglib2:imglib2-algorithms:2.0.0-beta-26">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms/2.0.0-beta-26/imglib2-algorithms-2.0.0-beta-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms/2.0.0-beta-26/imglib2-algorithms-2.0.0-beta-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-algorithms/2.0.0-beta-26/imglib2-algorithms-2.0.0-beta-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imglib2:imglib2-ij:2.0.0-beta-26">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-ij/2.0.0-beta-26/imglib2-ij-2.0.0-beta-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-ij/2.0.0-beta-26/imglib2-ij-2.0.0-beta-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-ij/2.0.0-beta-26/imglib2-ij-2.0.0-beta-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imglib2:imglib2-meta:2.0.0-beta-26">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-meta/2.0.0-beta-26/imglib2-meta-2.0.0-beta-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-meta/2.0.0-beta-26/imglib2-meta-2.0.0-beta-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2-meta/2.0.0-beta-26/imglib2-meta-2.0.0-beta-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.imglib2:imglib2:2.0.0-beta-26">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2/2.0.0-beta-26/imglib2-2.0.0-beta-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2/2.0.0-beta-26/imglib2-2.0.0-beta-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/imglib2/imglib2/2.0.0-beta-26/imglib2-2.0.0-beta-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:formats-api:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-api/5.0.2/formats-api-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-api/5.0.2/formats-api-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-api/5.0.2/formats-api-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:formats-bsd:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-bsd/5.0.2/formats-bsd-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-bsd/5.0.2/formats-bsd-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-bsd/5.0.2/formats-bsd-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:formats-common:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-common/5.0.2/formats-common-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-common/5.0.2/formats-common-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/formats-common/5.0.2/formats-common-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:jai_imageio:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/jai_imageio/5.0.2/jai_imageio-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/jai_imageio/5.0.2/jai_imageio-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/jai_imageio/5.0.2/jai_imageio-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:ome-xml:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/ome-xml/5.0.2/ome-xml-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/ome-xml/5.0.2/ome-xml-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/ome-xml/5.0.2/ome-xml-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:specification:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/specification/5.0.2/specification-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/specification/5.0.2/specification-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/specification/5.0.2/specification-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: ome:turbojpeg:5.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/turbojpeg/5.0.2/turbojpeg-5.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/turbojpeg/5.0.2/turbojpeg-5.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/ome/turbojpeg/5.0.2/turbojpeg-5.0.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.apache.commons:commons-math3:3.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.2/commons-math3-3.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.2/commons-math3-3.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/commons/commons-math3/3.2/commons-math3-3.2-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.bushe:eventbus:1.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/bushe/eventbus/1.4/eventbus-1.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/bushe/eventbus/1.4/eventbus-1.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/bushe/eventbus/1.4/eventbus-1.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.jfree:jcommon:1.0.17">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jfree/jcommon/1.0.17/jcommon-1.0.17.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jfree/jcommon/1.0.17/jcommon-1.0.17-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jfree/jcommon/1.0.17/jcommon-1.0.17-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.jfree:jfreechart:1.0.14">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jfree/jfreechart/1.0.14/jfreechart-1.0.14.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jfree/jfreechart/1.0.14/jfreechart-1.0.14-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/jfree/jfreechart/1.0.14/jfreechart-1.0.14-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.json:json:20090211">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20090211/json-20090211.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20090211/json-20090211-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/json/json/20090211/json-20090211-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.mapdb:mapdb:1.0.3">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mapdb/mapdb/1.0.3/mapdb-1.0.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mapdb/mapdb/1.0.3/mapdb-1.0.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/mapdb/mapdb/1.0.3/mapdb-1.0.3-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.micromanager:MMCoreJ:1.4.19-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/micromanager/MMCoreJ/1.4.19-SNAPSHOT/MMCoreJ-1.4.19-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/micromanager/MMCoreJ/1.4.19-SNAPSHOT/MMCoreJ-1.4.19-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/micromanager/MMCoreJ/1.4.19-SNAPSHOT/MMCoreJ-1.4.19-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.micromanager:MMJ_:1.4.19-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/micromanager/MMJ_/1.4.19-SNAPSHOT/MMJ_-1.4.19-SNAPSHOT.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/micromanager/MMJ_/1.4.19-SNAPSHOT/MMJ_-1.4.19-SNAPSHOT-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/micromanager/MMJ_/1.4.19-SNAPSHOT/MMJ_-1.4.19-SNAPSHOT-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.perf4j:perf4j:0.9.13">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/perf4j/perf4j/0.9.13/perf4j-0.9.13.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/perf4j/perf4j/0.9.13/perf4j-0.9.13-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/perf4j/perf4j/0.9.13/perf4j-0.9.13-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.scijava:native-lib-loader:2.0.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scijava/native-lib-loader/2.0.1/native-lib-loader-2.0.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scijava/native-lib-loader/2.0.1/native-lib-loader-2.0.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scijava/native-lib-loader/2.0.1/native-lib-loader-2.0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.scijava:scijava-common:2.27.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scijava/scijava-common/2.27.0/scijava-common-2.27.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scijava/scijava-common/2.27.0/scijava-common-2.27.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/scijava/scijava-common/2.27.0/scijava-common-2.27.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.slf4j:slf4j-api:1.7.6">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.6/slf4j-api-1.7.6.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.6/slf4j-api-1.7.6-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.6/slf4j-api-1.7.6-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: sc.fiji:3D_Viewer:2.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/3D_Viewer/2.0.0-SNAPSHOT/3D_Viewer-2.0.0-20140821.151343-24.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/3D_Viewer/2.0.0-SNAPSHOT/3D_Viewer-2.0.0-20140821.151343-24-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/3D_Viewer/2.0.0-SNAPSHOT/3D_Viewer-2.0.0-20140821.151343-24-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: sc.fiji:fiji-lib:2.0.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/fiji-lib/2.0.0/fiji-lib-2.0.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/fiji-lib/2.0.0/fiji-lib-2.0.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/fiji-lib/2.0.0/fiji-lib-2.0.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: sc.fiji:legacy-imglib1:2.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/legacy-imglib1/2.0.0-SNAPSHOT/legacy-imglib1-2.0.0-20141002.211301-19.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/legacy-imglib1/2.0.0-SNAPSHOT/legacy-imglib1-2.0.0-20141002.211301-19-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/legacy-imglib1/2.0.0-SNAPSHOT/legacy-imglib1-2.0.0-20141002.211301-19-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: sc.fiji:pal-optimization:2.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/pal-optimization/2.0.0-SNAPSHOT/pal-optimization-2.0.0-20140417.213100-10.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/pal-optimization/2.0.0-SNAPSHOT/pal-optimization-2.0.0-20140417.213100-10-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/pal-optimization/2.0.0-SNAPSHOT/pal-optimization-2.0.0-20140417.213100-10-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: sc.fiji:VIB-lib:2.0.0-SNAPSHOT">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/VIB-lib/2.0.0-SNAPSHOT/VIB-lib-2.0.0-20140724.221803-26.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/VIB-lib/2.0.0-SNAPSHOT/VIB-lib-2.0.0-20140724.221803-26-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/sc/fiji/VIB-lib/2.0.0-SNAPSHOT/VIB-lib-2.0.0-20140724.221803-26-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: xalan:serializer:2.7.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/xalan/serializer/2.7.1/serializer-2.7.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/xalan/serializer/2.7.1/serializer-2.7.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/xalan/serializer/2.7.1/serializer-2.7.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: xalan:xalan:2.7.1">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/xalan/xalan/2.7.1/xalan-2.7.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/xalan/xalan/2.7.1/xalan-2.7.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/xalan/xalan/2.7.1/xalan-2.7.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: xml-apis:xml-apis:1.3.04">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04-sources.jar!/" />
+      </SOURCES>
+    </library>
+  </component>
+</project>
+
