@@ -26,6 +26,13 @@ import spim.setup.SPIMSetup.SPIMDevice;
 import spim.setup.Stage;
 import spim.progacq.AcqRow.DeviceValueSet;
 
+// ClearVolume support
+import clearvolume.volume.Volume;
+import clearvolume.volume.VolumeManager;
+import clearvolume.volume.sink.timeshift.MultiChannelTimeShiftingSink;
+import java.util.concurrent.TimeUnit;
+import java.nio.ByteBuffer;
+
 public class ProgrammaticAcquisitor {
 	public static class Profiler {
 		private Map<String, Profiler> children;
@@ -251,6 +258,7 @@ public class ProgrammaticAcquisitor {
 		public abstract void reportProgress(int tp, int row, double overall);
 	}
 
+
 	/**
 	 * Performs an acquisition sequence according to the parameters passed.
 	 * 
@@ -259,7 +267,7 @@ public class ProgrammaticAcquisitor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ImagePlus performAcquisition(final AcqParams params) throws Exception {
+	public static ImagePlus performAcquisition(final AcqParams params, final MultiChannelTimeShiftingSink sink) throws Exception {
 		if(params.isContinuous() && params.isAntiDriftOn())
 			throw new IllegalArgumentException("No continuous acquisition w/ anti-drift!");
 
@@ -305,6 +313,8 @@ public class ProgrammaticAcquisitor {
 		if(params.doProfiling())
 			prof.get("Setup").stop();
 
+		VolumeManager vm = sink.getManager();
+
 		for(int timeSeq = 0; timeSeq < params.getTimeSeqCount(); ++timeSeq) {
 			Thread continuousThread = null;
 			if (params.isContinuous()) {
@@ -327,6 +337,7 @@ public class ProgrammaticAcquisitor {
 								};
 
 								TaggedImage ti = core.popNextTaggedImage();
+
 								handleSlice(core, setup, metaDevs, acqBegan, ImageUtils.makeProcessor(ti), handler);
 
 								if(params.isUpdateLive())
@@ -403,6 +414,7 @@ public class ProgrammaticAcquisitor {
 						TaggedImage ti = snapImage(setup, !params.isIllumFullStack());
 						ImageProcessor ip = ImageUtils.makeProcessor(ti);
 
+
 						handleSlice(core, setup, metaDevs, acqBegan, ip, handler);
 						if(ad != null)
 							tallyAntiDriftSlice(core, setup, row, ad, ip);
@@ -412,6 +424,25 @@ public class ProgrammaticAcquisitor {
 				} else if (!row.getZContinuous()) {
 					double start = setup.getZStage().getPosition();
 					double end = start + row.getZEndPosition() - row.getZStartPosition();
+
+					final int lResolutionX = (int)core.getImageWidth();
+					final int lResolutionY = (int)core.getImageHeight();
+					final int lResolutionZ = (int)Math.floor((end-start)/row.getZStepSize());
+
+					Volume<Byte> lVolume = vm.requestAndWaitForVolume(1,
+							TimeUnit.MILLISECONDS,
+							Byte.class,
+							1,
+							lResolutionX,
+							lResolutionY,
+							lResolutionZ);
+
+					ByteBuffer lVolumeData = lVolume.getDataBuffer();
+
+					lVolumeData.rewind();
+
+					int zIndex = 0;
+
 					for(double zStart = start; zStart <= end; zStart += row.getZStepSize()) {
 						if(params.doProfiling())
 							prof.get("Movement").start();
@@ -443,6 +474,17 @@ public class ProgrammaticAcquisitor {
 							ImageProcessor ip = ImageUtils.makeProcessor(ti);
 							handleSlice(core, setup, metaDevs, acqBegan, ip, handler);
 
+							ReportingUtils.logMessage("We are now @timeSeq " + timeSeq + ":" + step);
+							ReportingUtils.logMessage("Created ImageProcessor with " + ip.getWidth() + "x" + ip.getHeight() + ", handing data to ClearVolume");
+
+								for (int y = 0; y < lResolutionY; y++) {
+									for (int x = 0; x < lResolutionX; x++) {
+										final int lIndex = x + lResolutionX * y + lResolutionY * lResolutionZ * zIndex;
+
+										lVolumeData.put(lIndex, (byte)ip.getPixel(x, y));
+									}
+								}
+
 							if(params.doProfiling())
 								prof.get("Output").stop();
 
@@ -462,7 +504,15 @@ public class ProgrammaticAcquisitor {
 								params.getProgressListener().reportProgress(tp, rown, progress);
 							}
 						});
+
+						zIndex++;
 					}
+
+					lVolume.setTimeIndex(timeSeq);
+					lVolume.setChannelID(step);
+
+					sink.sendVolume(lVolume);
+
 				} else {
 					setup.getZStage().setPosition(row.getZStartPosition());
 					Double oldVel = setup.getZStage().getVelocity();
@@ -556,6 +606,10 @@ public class ProgrammaticAcquisitor {
 
 		return handler.getImagePlus();
 	}
+
+    public static ImagePlus performAcquisition(final AcqParams params) throws Exception {
+        return performAcquisition(params, null);
+    }
 
 	private static void tallyAntiDriftSlice(CMMCore core, SPIMSetup setup, AcqRow row, AntiDrift ad, ImageProcessor ip) throws Exception {
 		ad.tallySlice(new Vector3D(0,0,setup.getZStage().getPosition()-row.getZStartPosition()), ip);

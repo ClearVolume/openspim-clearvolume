@@ -89,13 +89,13 @@ import spim.progacq.RangeSlider;
 import spim.progacq.StepTableModel;
 
 // ClearVolume support
-import clearvolume.ProjectionAlgorithm;
-import clearvolume.controller.ExternalRotationController;
 import clearvolume.renderer.ClearVolumeRendererInterface;
-import clearvolume.renderer.clearcuda.JCudaClearVolumeRenderer;
 import clearvolume.renderer.factory.ClearVolumeRendererFactory;
-import clearvolume.transferf.TransferFunctions;
-import java.nio.ByteBuffer;
+import clearvolume.volume.sink.NullVolumeSink;
+import clearvolume.volume.sink.renderer.ClearVolumeRendererSink;
+import clearvolume.volume.sink.timeshift.MultiChannelTimeShiftingSink;
+import clearvolume.volume.sink.timeshift.gui.MultiChannelTimeShiftingSinkJFrame;
+import java.util.concurrent.TimeUnit;
 
 
 public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
@@ -130,6 +130,10 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	private Thread acqThread;
 	
 	private SPIMCalibrator calibration;
+
+	private ClearVolumeRendererInterface lClearVolumeRenderer = null;
+	private ClearVolumeRendererSink lClearVolumeRendererSink = null;
+	private MultiChannelTimeShiftingSink lMultiChannelTimeShiftingSink = null;
 
 	// TODO: read these from the properties
 	protected double motorMin = 0, motorMax = 9000, motorStep = 1.5,
@@ -179,7 +183,7 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	 *  The menu name is stored in a static string, so Micro-Manager
 	 *  can obtain it without instantiating the plugin
 	 */
-	public static String menuName = "Acquire le SPIM image";
+	public static String menuName = "Acquire le SPIM image de la awesome";
 	public static String tooltipDescription = "The OpenSPIM GUI";
 	
 	/**
@@ -1753,22 +1757,26 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					output = null;
 				}
 
-                final ClearVolumeRendererInterface lClearVolumeRenderer = new JCudaClearVolumeRenderer(	"ClearVolumeTest",
-                        1024,
-                        1024);
-                lClearVolumeRenderer.setTransfertFunction(TransferFunctions.getGrayLevel());
-                lClearVolumeRenderer.setVisible(true);
+				if(lClearVolumeRenderer == null) {
+					lClearVolumeRenderer = ClearVolumeRendererFactory.newBestRenderer("OpenSPIM ClearVolume", 512, 512, 1, 512, 512, 2);
 
-                final int lResolutionX = (int)mmc.getImageWidth();
-                final int lResolutionY = (int)mmc.getImageHeight();
 
-                int count = 0;
-                for(AcqRow row : ((StepTableModel)acqPositionsTable.getModel()))
-                    count += row.getDepth();
-                final int lResolutionZ = count;
+					lClearVolumeRenderer.setVisible(true);
 
-                final byte[] lVolumeDataArray = new byte[lResolutionX * lResolutionY * lResolutionZ];
-                ReportingUtils.logError("ClearVolume res: " + lResolutionX + "x" + lResolutionY + "x" + lResolutionZ);
+					ClearVolumeRendererSink lClearVolumeRendererSink = new ClearVolumeRendererSink(
+							lClearVolumeRenderer,
+							lClearVolumeRenderer.createCompatibleVolumeManager(200),
+							100,
+							TimeUnit.MILLISECONDS);
+
+					lClearVolumeRendererSink.setRelaySink(new NullVolumeSink());
+
+					lMultiChannelTimeShiftingSink = new MultiChannelTimeShiftingSink(50, 100);
+
+					MultiChannelTimeShiftingSinkJFrame.launch(lMultiChannelTimeShiftingSink);
+
+					lMultiChannelTimeShiftingSink.setRelaySink(lClearVolumeRendererSink);
+				}
 
 				if(antiDriftCheckbox.isSelected())
 					params.setAntiDrift(new AntiDrift.Factory() {
@@ -1804,33 +1812,11 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					@Override
 					public void run() {
 						try {
-							ImagePlus img = ProgrammaticAcquisitor.performAcquisition(params);
+							ImagePlus img = ProgrammaticAcquisitor.performAcquisition(params, lMultiChannelTimeShiftingSink);
 
 							if(img != null) {
                                 //img.show();
                                 img.getStack().getImageArray();
-
-                                final byte[] lVolumeDataArray = new byte[lResolutionX * lResolutionY
-                                        * lResolutionZ];
-
-                                for (int z = 0; z < lResolutionZ; z++)
-                                    for (int y = 0; y < lResolutionY; y++)
-                                        for (int x = 0; x < lResolutionX; x++)
-                                        {
-                                            final int lIndex = x + lResolutionX
-                                                    * y
-                                                    + lResolutionX
-                                                    * lResolutionY
-                                                    * z;
-                                            lVolumeDataArray[lIndex] = (byte)img.getStack().getVoxel(x, y, z);
-                                        }
-
-                                lClearVolumeRenderer.setVolumeDataBuffer(	ByteBuffer.wrap(lVolumeDataArray),
-                                        lResolutionX,
-                                        lResolutionY,
-                                        lResolutionZ);
-
-                                lClearVolumeRenderer.requestDisplay();
                             }
 						} catch (Exception e) {
 							e.printStackTrace();
