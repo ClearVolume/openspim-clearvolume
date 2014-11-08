@@ -93,9 +93,12 @@ import clearvolume.renderer.ClearVolumeRendererInterface;
 import clearvolume.renderer.factory.ClearVolumeRendererFactory;
 import clearvolume.volume.sink.NullVolumeSink;
 import clearvolume.volume.sink.renderer.ClearVolumeRendererSink;
-import clearvolume.volume.sink.timeshift.MultiChannelTimeShiftingSink;
-import clearvolume.volume.sink.timeshift.gui.MultiChannelTimeShiftingSinkJFrame;
+import clearvolume.volume.sink.timeshift.TimeShiftingSink;
+import clearvolume.volume.sink.timeshift.gui.TimeShiftingSinkJFrame;
 import java.util.concurrent.TimeUnit;
+
+// ClearVolume controller support
+import clearvolume.controller.ExternalRotationController;
 
 
 public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
@@ -104,6 +107,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	private static final String VIDEO_RECORDER = "Video";
 	private static final String BTN_STOP = "Abort!";
 	private static final String BTN_START = "Oh Snap!";
+	private static final String CB_LIVEVIEW = "ClearVolume Live View";
+	private static final String CB_GESTURECONTROL = "Use gesture control";
 
 	private JButton acqFetchX;
 	private JButton acqFetchY;
@@ -126,6 +131,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	private JCheckBox acqTimeoutCB;
 	private JTextField acqTimeoutValBox;
 	private JTextField acqSaveDir;
+	private JCheckBox useLiveView;
+	private JCheckBox useGestureControl;
 	private JButton acqGoBtn;
 	private Thread acqThread;
 	
@@ -133,7 +140,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 
 	private ClearVolumeRendererInterface lClearVolumeRenderer = null;
 	private ClearVolumeRendererSink lClearVolumeRendererSink = null;
-	private MultiChannelTimeShiftingSink lMultiChannelTimeShiftingSink = null;
+	private TimeShiftingSink lTimeShiftingSink = null;
+	private ExternalRotationController rc = null;
 
 	// TODO: read these from the properties
 	protected double motorMin = 0, motorMax = 9000, motorStep = 1.5,
@@ -999,6 +1007,12 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 		JPanel goBtnPnl = new JPanel();
 		goBtnPnl.setLayout(new GridLayout(2,1));
 
+		useLiveView = new JCheckBox(CB_LIVEVIEW, true);
+		goBtnPnl.add(useLiveView);
+
+		useGestureControl = new JCheckBox(CB_GESTURECONTROL, false);
+		goBtnPnl.add(useGestureControl);
+
 		acqGoBtn = new JButton(BTN_START);
 		acqGoBtn.addActionListener(this);
 		goBtnPnl.add(acqGoBtn);
@@ -1757,9 +1771,9 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					output = null;
 				}
 
-				if(lClearVolumeRenderer == null) {
-					lClearVolumeRenderer = ClearVolumeRendererFactory.newBestRenderer("OpenSPIM ClearVolume", 512, 512, 1, 512, 512, 2);
-
+				if(lClearVolumeRenderer == null && useLiveView.isEnabled()) {
+					lClearVolumeRenderer = ClearVolumeRendererFactory.newBestRenderer("OpenSPIM ClearVolume",
+							512, 512, 2, 512, 512, params.getRows().length);
 
 					lClearVolumeRenderer.setVisible(true);
 
@@ -1771,11 +1785,25 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 
 					lClearVolumeRendererSink.setRelaySink(new NullVolumeSink());
 
-					lMultiChannelTimeShiftingSink = new MultiChannelTimeShiftingSink(50, 100);
+					lClearVolumeRendererSink.setRelaySink(new NullVolumeSink());
 
-					MultiChannelTimeShiftingSinkJFrame.launch(lMultiChannelTimeShiftingSink);
+					lTimeShiftingSink = new TimeShiftingSink(50, 100);
 
-					lMultiChannelTimeShiftingSink.setRelaySink(lClearVolumeRendererSink);
+					TimeShiftingSinkJFrame.launch(lTimeShiftingSink);
+
+					lTimeShiftingSink.setRelaySink(lClearVolumeRendererSink);
+
+					if(useGestureControl.isEnabled()) {
+						try {
+							rc = new ExternalRotationController(ExternalRotationController.cDefaultEgg3DTCPport, lClearVolumeRenderer);
+							lClearVolumeRenderer.setQuaternionController(rc);
+							rc.connectAsynchronouslyOrWait();
+						} catch (final Exception e) {
+							e.printStackTrace();
+						}
+					}
+				} else if(lClearVolumeRenderer != null && useLiveView.isEnabled()) {
+					lClearVolumeRenderer.setVisible(true);
 				}
 
 				if(antiDriftCheckbox.isSelected())
@@ -1812,7 +1840,7 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					@Override
 					public void run() {
 						try {
-							ImagePlus img = ProgrammaticAcquisitor.performAcquisition(params, lMultiChannelTimeShiftingSink);
+							ImagePlus img = ProgrammaticAcquisitor.performAcquisition(params, lTimeShiftingSink);
 
 							if(img != null) {
                                 //img.show();
