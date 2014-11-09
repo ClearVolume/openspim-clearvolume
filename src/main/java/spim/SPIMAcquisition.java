@@ -1,5 +1,7 @@
 package spim;
 
+import clearvolume.volume.sink.filter.ChannelFilterSink;
+import clearvolume.volume.sink.filter.gui.ChannelFilterSinkJFrame;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -26,6 +28,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,6 +98,13 @@ import clearvolume.volume.sink.NullVolumeSink;
 import clearvolume.volume.sink.renderer.ClearVolumeRendererSink;
 import clearvolume.volume.sink.timeshift.TimeShiftingSink;
 import clearvolume.volume.sink.timeshift.gui.TimeShiftingSinkJFrame;
+import clearvolume.volume.VolumeManager;
+
+import clearvolume.network.serialization.ClearVolumeSerialization;
+import clearvolume.network.server.ClearVolumeTCPServerSink;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+
 import java.util.concurrent.TimeUnit;
 
 // ClearVolume controller support
@@ -141,6 +151,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	private ClearVolumeRendererInterface lClearVolumeRenderer = null;
 	private ClearVolumeRendererSink lClearVolumeRendererSink = null;
 	private TimeShiftingSink lTimeShiftingSink = null;
+	private ChannelFilterSink lChannelFilterSink = null;
+	private ClearVolumeTCPServerSink lClearVolumeTCPServer = null;
 	private ExternalRotationController rc = null;
 
 	// TODO: read these from the properties
@@ -1773,7 +1785,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 
 				if(lClearVolumeRenderer == null && useLiveView.isEnabled()) {
 					lClearVolumeRenderer = ClearVolumeRendererFactory.newBestRenderer("OpenSPIM ClearVolume",
-							512, 512, 2, 512, 512, params.getRows().length);
+							512, 512, 2, 512, 512, 1);
+					VolumeManager lVolumeManager = lClearVolumeRenderer.createCompatibleVolumeManager(200);
 
 					lClearVolumeRenderer.setVisible(true);
 
@@ -1783,15 +1796,27 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 							100,
 							TimeUnit.MILLISECONDS);
 
-					lClearVolumeRendererSink.setRelaySink(new NullVolumeSink());
+					lClearVolumeTCPServer = new ClearVolumeTCPServerSink(10);
 
-					lClearVolumeRendererSink.setRelaySink(new NullVolumeSink());
+					SocketAddress lServerSocketAddress = new InetSocketAddress(ClearVolumeSerialization.cStandardTCPPort);
 
-					lTimeShiftingSink = new TimeShiftingSink(50, 100);
+					try {
+						lClearVolumeTCPServer.open(lServerSocketAddress);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					lClearVolumeTCPServer.start();
+
+					lTimeShiftingSink = new TimeShiftingSink(100, 200);
+					lChannelFilterSink = new ChannelFilterSink(new NullVolumeSink());
 
 					TimeShiftingSinkJFrame.launch(lTimeShiftingSink);
+					ChannelFilterSinkJFrame.launch(lChannelFilterSink);
 
-					lTimeShiftingSink.setRelaySink(lClearVolumeRendererSink);
+					lTimeShiftingSink.setRelaySink(lChannelFilterSink);
+					lChannelFilterSink.setRelaySink(lClearVolumeRendererSink);
+					lClearVolumeRendererSink.setRelaySink(lClearVolumeTCPServer);
+					lClearVolumeTCPServer.setRelaySink(new NullVolumeSink(lVolumeManager));
 
 					if(useGestureControl.isEnabled()) {
 						try {
@@ -1859,6 +1884,15 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 						acqProgress.setString("Not Acquiring");
 						acqProgress.setValue(0);
 						acqProgress.repaint();
+
+						if(lClearVolumeTCPServer != null) {
+							lClearVolumeTCPServer.stop();
+							try {
+								lClearVolumeTCPServer.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
 					}
 				};
 			}

@@ -1,5 +1,6 @@
 package spim.progacq;
 
+import clearvolume.volume.sink.VolumeSinkInterface;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
@@ -268,7 +269,7 @@ public class ProgrammaticAcquisitor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ImagePlus performAcquisition(final AcqParams params, final TimeShiftingSink sink) throws Exception {
+	public static ImagePlus performAcquisition(final AcqParams params, final VolumeSinkInterface sink) throws Exception {
 		if(params.isContinuous() && params.isAntiDriftOn())
 			throw new IllegalArgumentException("No continuous acquisition w/ anti-drift!");
 
@@ -430,8 +431,6 @@ public class ProgrammaticAcquisitor {
 					final int lResolutionY = (int)core.getImageHeight();
 					final int lResolutionZ = (int)Math.ceil((end-start)/row.getZStepSize())+1;
 
-					ReportingUtils.logError(lResolutionX + ", " + lResolutionY + ", " + lResolutionZ);
-
 					Volume<Character> lVolume = vm.requestAndWaitForVolume(1,
 							TimeUnit.MILLISECONDS,
 							Character.class,
@@ -442,7 +441,6 @@ public class ProgrammaticAcquisitor {
 
 					ByteBuffer lVolumeDataByteBuffer = lVolume.getDataBuffer();
 					CharBuffer lVolumeDataCharBuffer = lVolumeDataByteBuffer.asCharBuffer();
-					ReportingUtils.logError("limit:" + lVolumeDataCharBuffer.limit());
 
 					lVolumeDataCharBuffer.rewind();
 
@@ -479,18 +477,25 @@ public class ProgrammaticAcquisitor {
 							ImageProcessor ip = ImageUtils.makeProcessor(ti);
 							handleSlice(core, setup, metaDevs, acqBegan, ip, handler);
 
-							ReportingUtils.logMessage("We are now @timeSeq " + timeSeq + ":" + step);
-							ReportingUtils.logMessage("Created ImageProcessor with " + ip.getWidth() + "x" + ip.getHeight() + ", handing data to ClearVolume");
-							ReportingUtils.logError(" z:" + zIndex);
+							//ReportingUtils.logMessage("We are now @timeSeq " + timeSeq + ":" + step);
+							//ReportingUtils.logMessage("Created ImageProcessor with " + ip.getWidth() + "x" + ip.getHeight() + ", handing data to ClearVolume");
+							//ReportingUtils.logMessage(" z:" + zIndex);
+							int lIndex = 0;
 
+							try {
 								for (int y = 0; y < lResolutionY; y++) {
 									for (int x = 0; x < lResolutionX; x++) {
-										final int lIndex = x + lResolutionX * y + lResolutionX * lResolutionY * zIndex;
-
+										lIndex = x + lResolutionX * y + lResolutionX * lResolutionY * zIndex;
 
 										lVolumeDataCharBuffer.put(lIndex, (char)ip.getPixel(x, y));
 									}
-								}
+							}
+							} catch (Throwable t) {
+								/*System.out.println(lIndex);
+								System.out.println(lVolumeDataByteBuffer);
+								System.out.println(t.getStackTrace());
+								*/
+							}
 
 							if(params.doProfiling())
 								prof.get("Output").stop();
@@ -515,6 +520,7 @@ public class ProgrammaticAcquisitor {
 						zIndex++;
 					}
 
+					ReportingUtils.logMessage("timestep: " + timeSeq + " channel:" + step);
 					lVolume.setTimeIndex(timeSeq);
 					lVolume.setChannelID(step);
 
