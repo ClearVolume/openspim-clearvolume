@@ -119,6 +119,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	private static final String BTN_START = "Oh Snap!";
 	private static final String CB_LIVEVIEW = "ClearVolume Live View";
 	private static final String CB_GESTURECONTROL = "Use gesture control";
+	private static final String TOOLTIP_CB_LIVEVIEW = "<html><b>Activates ClearVolume-powered 3D volume rendering after every Z stack</b><br><br>You'll get a direct volume rendering of all Z stacks that are acquired. You can also timeshift through timepoints and angles.<br>This also opens a ClearVolume server on port 9140, so you can watch the acquisition remotely.</html>";
+	private static final String TOOLTIP_CB_GESTURECONTROL = "<html><b>Activates Leap Motion and Egg3D support</b> for ClearVolume<br>for navigation of the 3D volume</html>";
 
 	private JButton acqFetchX;
 	private JButton acqFetchY;
@@ -1020,9 +1022,11 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 		goBtnPnl.setLayout(new GridLayout(2,1));
 
 		useLiveView = new JCheckBox(CB_LIVEVIEW, true);
+		useLiveView.setToolTipText(TOOLTIP_CB_LIVEVIEW);
 		goBtnPnl.add(useLiveView);
 
 		useGestureControl = new JCheckBox(CB_GESTURECONTROL, false);
+		useGestureControl.setToolTipText(TOOLTIP_CB_GESTURECONTROL);
 		goBtnPnl.add(useGestureControl);
 
 		acqGoBtn = new JButton(BTN_START);
