@@ -4,3 +4,5 @@ system.
 
 The *SPIMAcquisition* plugin for [Micro Manager](https://micro-manager.org) is
 the primary means to acquire image stacks with the OpenSPIM setups.
+
+This version of the OpenSPIM acquisition plugin features [ClearVolume](https://clearvolume.bitbucket.org/)-powered live rendering of acquired Z-stacks.
