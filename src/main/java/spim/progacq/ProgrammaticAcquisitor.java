@@ -439,6 +439,8 @@ public class ProgrammaticAcquisitor {
 							lResolutionY,
 							lResolutionZ);
 
+					lVolume.setVoxelSizeInRealUnits("um", 1.0, 1.0, 12.0);
+
 					ByteBuffer lVolumeDataByteBuffer = lVolume.getDataBuffer();
 					CharBuffer lVolumeDataCharBuffer = lVolumeDataByteBuffer.asCharBuffer();
 
@@ -496,6 +498,8 @@ public class ProgrammaticAcquisitor {
 								System.out.println(t.getStackTrace());
 								*/
 							}
+
+							ip.reset();
 
 							if(params.doProfiling())
 								prof.get("Output").stop();
