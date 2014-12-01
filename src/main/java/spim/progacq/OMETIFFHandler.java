@@ -4,6 +4,7 @@ import java.io.File;
 
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
+import loci.formats.tiff.TiffSaver;
 import org.micromanager.utils.ReportingUtils;
 
 import loci.common.DataTools;
@@ -21,6 +22,8 @@ import ome.xml.model.enums.PixelType;
 import ome.xml.model.primitives.NonNegativeInteger;
 import ome.xml.model.primitives.PositiveFloat;
 import ome.xml.model.primitives.PositiveInteger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OMETIFFHandler implements AcqOutputHandler {
 	private File outputDirectory;
