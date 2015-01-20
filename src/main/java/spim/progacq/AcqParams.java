@@ -1,11 +1,11 @@
 package spim.progacq;
 
-import java.io.File;
-
+import clearvolume.volume.sink.VolumeSinkInterface;
+import mmcorej.CMMCore;
 import spim.setup.SPIMSetup;
 import spim.setup.SPIMSetup.SPIMDevice;
 
-import mmcorej.CMMCore;
+import java.io.File;
 
 public class AcqParams {
 	private CMMCore			core;
@@ -29,6 +29,10 @@ public class AcqParams {
 	private int					zWaitMillis;
 
 	private boolean				profile;
+
+	private boolean				useClearVolume;
+
+	private VolumeSinkInterface clearVolumeSink;
 
 	public AcqParams() {
 		this(null, null, null, 0D, 0, false, null, null, false, null);
@@ -137,6 +141,22 @@ public class AcqParams {
 	 */
 	public void setContinuous(boolean continuous) {
 		this.continuous = continuous;
+	}
+
+	public void setUseClearVolume(boolean useClearVolume) {
+		this.useClearVolume = useClearVolume;
+	}
+
+	public boolean getUseClearVolume() {
+		return this.useClearVolume;
+	}
+
+	public void setClearVolumeSink(final VolumeSinkInterface sink) {
+		this.clearVolumeSink = sink;
+	}
+
+	public final VolumeSinkInterface getClearVolumeSink() {
+		return this.clearVolumeSink;
 	}
 
 	/**

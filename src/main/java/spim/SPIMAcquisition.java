@@ -1,72 +1,25 @@
 package spim;
 
+import clearvolume.controller.ExternalRotationController;
+import clearvolume.network.serialization.ClearVolumeSerialization;
+import clearvolume.network.server.ClearVolumeTCPServerSink;
+import clearvolume.renderer.ClearVolumeRendererInterface;
+import clearvolume.renderer.factory.ClearVolumeRendererFactory;
+import clearvolume.volume.VolumeManager;
+import clearvolume.volume.sink.NullVolumeSink;
 import clearvolume.volume.sink.filter.ChannelFilterSink;
 import clearvolume.volume.sink.filter.gui.ChannelFilterSinkJFrame;
+import clearvolume.volume.sink.renderer.ClearVolumeRendererSink;
+import clearvolume.volume.sink.timeshift.TimeShiftingSink;
+import clearvolume.volume.sink.timeshift.gui.TimeShiftingSinkJFrame;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.gui.GenericDialog;
 import ij.gui.ImageWindow;
 import ij.process.ImageProcessor;
-
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Point;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-
 import mmcorej.CMMCore;
 import mmcorej.DeviceType;
-
 import org.apache.commons.math3.geometry.euclidean.threed.Rotation;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.micromanager.MMStudio;
@@ -74,41 +27,31 @@ import org.micromanager.api.MMPlugin;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.utils.ImageUtils;
 import org.micromanager.utils.ReportingUtils;
-
+import spim.progacq.*;
 import spim.setup.DeviceManager;
 import spim.setup.SPIMSetup;
 import spim.setup.SPIMSetup.SPIMDevice;
 import spim.setup.Stage;
 
-import spim.progacq.AcqOutputHandler;
-import spim.progacq.AcqParams;
-import spim.progacq.AcqRow;
-import spim.progacq.AntiDrift;
-import spim.progacq.AsyncOutputWrapper;
-import spim.progacq.OMETIFFHandler;
-import spim.progacq.ProgrammaticAcquisitor;
-import spim.progacq.ProjDiffAntiDrift;
-import spim.progacq.RangeSlider;
-import spim.progacq.StepTableModel;
-
-// ClearVolume support
-import clearvolume.renderer.ClearVolumeRendererInterface;
-import clearvolume.renderer.factory.ClearVolumeRendererFactory;
-import clearvolume.volume.sink.NullVolumeSink;
-import clearvolume.volume.sink.renderer.ClearVolumeRendererSink;
-import clearvolume.volume.sink.timeshift.TimeShiftingSink;
-import clearvolume.volume.sink.timeshift.gui.TimeShiftingSinkJFrame;
-import clearvolume.volume.VolumeManager;
-
-import clearvolume.network.serialization.ClearVolumeSerialization;
-import clearvolume.network.server.ClearVolumeTCPServerSink;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.event.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.TimeUnit;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
+// ClearVolume support
 // ClearVolume controller support
-import clearvolume.controller.ExternalRotationController;
 
 
 public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
@@ -1787,7 +1730,11 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					output = null;
 				}
 
-				if(lClearVolumeRenderer == null && useLiveView.isEnabled()) {
+				if(useLiveView.isSelected()) {
+					params.setUseClearVolume(true);
+				}
+
+				if(lClearVolumeRenderer == null && params.getUseClearVolume()) {
 					lClearVolumeRenderer = ClearVolumeRendererFactory.newBestRenderer("OpenSPIM ClearVolume",
 							512, 512, 2, 512, 512, 1);
 					VolumeManager lVolumeManager = lClearVolumeRenderer.createCompatibleVolumeManager(200);
@@ -1822,7 +1769,7 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					lClearVolumeRendererSink.setRelaySink(lClearVolumeTCPServer);
 					lClearVolumeTCPServer.setRelaySink(new NullVolumeSink(lVolumeManager));
 
-					if(useGestureControl.isEnabled()) {
+					if(useGestureControl.isSelected()) {
 						try {
 							rc = new ExternalRotationController(ExternalRotationController.cDefaultEgg3DTCPport, lClearVolumeRenderer);
 							lClearVolumeRenderer.setQuaternionController(rc);
@@ -1830,9 +1777,15 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 						} catch (final Exception e) {
 							e.printStackTrace();
 						}
+					} else {
+						ReportingUtils.logMessage("Gesture Control for ClearVolume is disabled.");
 					}
-				} else if(lClearVolumeRenderer != null && useLiveView.isEnabled()) {
+				} else if(lClearVolumeRenderer != null && params.getUseClearVolume()) {
 					lClearVolumeRenderer.setVisible(true);
+				}
+
+				else {
+					ReportingUtils.logMessage("ClearVolume is disabled.");
 				}
 
 				if(antiDriftCheckbox.isSelected())
@@ -1849,7 +1802,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 				params.setDoProfiling(acqProfileCheckbox.isSelected());
 
 				acqProgress.setEnabled(true);
-                if(useLiveView.isEnabled()) {
+
+                if(params.getUseClearVolume()) {
 					lClearVolumeRenderer.requestDisplay();
 				}
 
@@ -1871,7 +1825,8 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 					@Override
 					public void run() {
 						try {
-							ImagePlus img = ProgrammaticAcquisitor.performAcquisition(params, lTimeShiftingSink);
+							params.setClearVolumeSink(lTimeShiftingSink);
+							ImagePlus img = ProgrammaticAcquisitor.performAcquisition(params);
 
 							if(img != null) {
                                 //img.show();

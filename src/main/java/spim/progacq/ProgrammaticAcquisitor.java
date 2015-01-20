@@ -1,39 +1,34 @@
 package spim.progacq;
 
+import clearvolume.volume.Volume;
+import clearvolume.volume.VolumeManager;
 import clearvolume.volume.sink.VolumeSinkInterface;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.swing.SwingUtilities;
-
 import mmcorej.CMMCore;
 import mmcorej.DeviceType;
 import mmcorej.TaggedImage;
-
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.micromanager.MMStudio;
 import org.micromanager.SnapLiveManager;
 import org.micromanager.utils.ImageUtils;
 import org.micromanager.utils.MDUtils;
 import org.micromanager.utils.ReportingUtils;
-
+import spim.progacq.AcqRow.DeviceValueSet;
 import spim.setup.SPIMSetup;
 import spim.setup.SPIMSetup.SPIMDevice;
 import spim.setup.Stage;
-import spim.progacq.AcqRow.DeviceValueSet;
 
-// ClearVolume support
-import clearvolume.volume.Volume;
-import clearvolume.volume.VolumeManager;
-import clearvolume.volume.sink.timeshift.TimeShiftingSink;
-import java.util.concurrent.TimeUnit;
+import javax.swing.*;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import java.util.concurrent.TimeUnit;
+
+// ClearVolume support
 
 public class ProgrammaticAcquisitor {
 	public static class Profiler {
@@ -269,7 +264,7 @@ public class ProgrammaticAcquisitor {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ImagePlus performAcquisition(final AcqParams params, final VolumeSinkInterface sink) throws Exception {
+	public static ImagePlus performAcquisition(final AcqParams params) throws Exception {
 		if(params.isContinuous() && params.isAntiDriftOn())
 			throw new IllegalArgumentException("No continuous acquisition w/ anti-drift!");
 
@@ -316,8 +311,10 @@ public class ProgrammaticAcquisitor {
 			prof.get("Setup").stop();
 
 		VolumeManager vm = null;
+		VolumeSinkInterface sink = null;
 
-		if(sink != null) {
+		if(params.getUseClearVolume()) {
+			sink = params.getClearVolumeSink();
 			vm = sink.getManager();
 		}
 
@@ -439,7 +436,7 @@ public class ProgrammaticAcquisitor {
 					CharBuffer lVolumeDataCharBuffer = null;
 					Volume<Character> lVolume = null;
 
-					if(sink != null && vm != null) {
+					if(params.getUseClearVolume()) {
 
 						lVolume = vm.requestAndWaitForVolume(1,
 								TimeUnit.MILLISECONDS,
@@ -490,12 +487,9 @@ public class ProgrammaticAcquisitor {
 							ImageProcessor ip = ImageUtils.makeProcessor(ti);
 							handleSlice(core, setup, metaDevs, acqBegan, ip, handler);
 
-							//ReportingUtils.logMessage("We are now @timeSeq " + timeSeq + ":" + step);
-							//ReportingUtils.logMessage("Created ImageProcessor with " + ip.getWidth() + "x" + ip.getHeight() + ", handing data to ClearVolume");
-							//ReportingUtils.logMessage(" z:" + zIndex);
 							int lIndex = 0;
 
-							if(sink != null && vm != null) {
+							if(params.getUseClearVolume()) {
 								try {
 									for (int y = 0; y < lResolutionY; y++) {
 										for (int x = 0; x < lResolutionX; x++) {
@@ -505,10 +499,6 @@ public class ProgrammaticAcquisitor {
 										}
 									}
 								} catch (Throwable t) {
-								/*System.out.println(lIndex);
-								System.out.println(lVolumeDataByteBuffer);
-								System.out.println(t.getStackTrace());
-								*/
 								}
 							}
 
@@ -539,7 +529,7 @@ public class ProgrammaticAcquisitor {
 
 					ReportingUtils.logMessage("timestep: " + timeSeq + " channel:" + step);
 
-					if(sink != null && vm != null) {
+					if(params.getUseClearVolume()) {
 						lVolume.setTimeIndex(timeSeq);
 						lVolume.setChannelID(step);
 
@@ -639,10 +629,6 @@ public class ProgrammaticAcquisitor {
 
 		return handler.getImagePlus();
 	}
-
-    public static ImagePlus performAcquisition(final AcqParams params) throws Exception {
-        return performAcquisition(params, null);
-    }
 
 	private static void tallyAntiDriftSlice(CMMCore core, SPIMSetup setup, AcqRow row, AntiDrift ad, ImageProcessor ip) throws Exception {
 		ad.tallySlice(new Vector3D(0,0,setup.getZStage().getPosition()-row.getZStartPosition()), ip);
