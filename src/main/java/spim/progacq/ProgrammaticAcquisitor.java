@@ -315,7 +315,11 @@ public class ProgrammaticAcquisitor {
 		if(params.doProfiling())
 			prof.get("Setup").stop();
 
-		VolumeManager vm = sink.getManager();
+		VolumeManager vm = null;
+
+		if(sink != null) {
+			vm = sink.getManager();
+		}
 
 		for(int timeSeq = 0; timeSeq < params.getTimeSeqCount(); ++timeSeq) {
 			Thread continuousThread = null;
@@ -427,24 +431,31 @@ public class ProgrammaticAcquisitor {
 					double start = setup.getZStage().getPosition();
 					double end = start + row.getZEndPosition() - row.getZStartPosition();
 
-					final int lResolutionX = (int)core.getImageWidth();
-					final int lResolutionY = (int)core.getImageHeight();
-					final int lResolutionZ = (int)Math.ceil((end-start)/row.getZStepSize())+1;
+						final int lResolutionX = (int) core.getImageWidth();
+						final int lResolutionY = (int) core.getImageHeight();
+						final int lResolutionZ = (int) Math.ceil((end - start) / row.getZStepSize()) + 1;
 
-					Volume<Character> lVolume = vm.requestAndWaitForVolume(1,
-							TimeUnit.MILLISECONDS,
-							Character.class,
-							1,
-							lResolutionX,
-							lResolutionY,
-							lResolutionZ);
+					ByteBuffer lVolumeDataByteBuffer = null;
+					CharBuffer lVolumeDataCharBuffer = null;
+					Volume<Character> lVolume = null;
 
-					lVolume.setVoxelSizeInRealUnits("um", 1.0, 1.0, 12.0);
+					if(sink != null && vm != null) {
 
-					ByteBuffer lVolumeDataByteBuffer = lVolume.getDataBuffer();
-					CharBuffer lVolumeDataCharBuffer = lVolumeDataByteBuffer.asCharBuffer();
+						lVolume = vm.requestAndWaitForVolume(1,
+								TimeUnit.MILLISECONDS,
+								Character.class,
+								1,
+								lResolutionX,
+								lResolutionY,
+								lResolutionZ);
 
-					lVolumeDataCharBuffer.rewind();
+						lVolume.setVoxelSizeInRealUnits("um", 1.0, 1.0, 12.0);
+
+						lVolumeDataByteBuffer = lVolume.getDataBuffer();
+						lVolumeDataCharBuffer = lVolumeDataByteBuffer.asCharBuffer();
+
+						lVolumeDataCharBuffer.rewind();
+					}
 
 					int zIndex = 0;
 
@@ -484,19 +495,21 @@ public class ProgrammaticAcquisitor {
 							//ReportingUtils.logMessage(" z:" + zIndex);
 							int lIndex = 0;
 
-							try {
-								for (int y = 0; y < lResolutionY; y++) {
-									for (int x = 0; x < lResolutionX; x++) {
-										lIndex = x + lResolutionX * y + lResolutionX * lResolutionY * zIndex;
+							if(sink != null && vm != null) {
+								try {
+									for (int y = 0; y < lResolutionY; y++) {
+										for (int x = 0; x < lResolutionX; x++) {
+											lIndex = x + lResolutionX * y + lResolutionX * lResolutionY * zIndex;
 
-										lVolumeDataCharBuffer.put(lIndex, (char)ip.getPixel(x, y));
+											lVolumeDataCharBuffer.put(lIndex, (char) ip.getPixel(x, y));
+										}
 									}
-							}
-							} catch (Throwable t) {
+								} catch (Throwable t) {
 								/*System.out.println(lIndex);
 								System.out.println(lVolumeDataByteBuffer);
 								System.out.println(t.getStackTrace());
 								*/
+								}
 							}
 
 							ip.reset();
@@ -525,10 +538,13 @@ public class ProgrammaticAcquisitor {
 					}
 
 					ReportingUtils.logMessage("timestep: " + timeSeq + " channel:" + step);
-					lVolume.setTimeIndex(timeSeq);
-					lVolume.setChannelID(step);
 
-					sink.sendVolume(lVolume);
+					if(sink != null && vm != null) {
+						lVolume.setTimeIndex(timeSeq);
+						lVolume.setChannelID(step);
+
+						sink.sendVolume(lVolume);
+					}
 
 				} else {
 					setup.getZStage().setPosition(row.getZStartPosition());

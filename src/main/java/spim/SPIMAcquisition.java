@@ -205,7 +205,7 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 	 *  The menu name is stored in a static string, so Micro-Manager
 	 *  can obtain it without instantiating the plugin
 	 */
-	public static String menuName = "Acquire le SPIM image de la awesome";
+	public static String menuName = "OpenSPIM Acquisition";
 	public static String tooltipDescription = "The OpenSPIM GUI";
 	
 	/**
@@ -1849,7 +1849,9 @@ public class SPIMAcquisition implements MMPlugin, ItemListener, ActionListener {
 				params.setDoProfiling(acqProfileCheckbox.isSelected());
 
 				acqProgress.setEnabled(true);
-                lClearVolumeRenderer.requestDisplay();
+                if(useLiveView.isEnabled()) {
+					lClearVolumeRenderer.requestDisplay();
+				}
 
 				params.setProgressListener(new ProgrammaticAcquisitor.AcqProgressCallback() {
 					@Override
